@@ -18,7 +18,8 @@ int main(int argc __attribute__((unused)), char **argv, char **env)
 	count = 1;
 	while (1)
 	{
-		write(STDOUT_FILENO, "$ ", 3);
+		if(isatty(STDOUT_FILENO) == 0)
+			write(STDOUT_FILENO, "$ ", 3);
 		cmd = read_cmd();
 		if (!cmd)
 			continue;
