@@ -1,4 +1,5 @@
 #include "main.h"
+#include <ctype.h>
 
 /**
  * _split - split a string into an array
@@ -14,13 +15,28 @@ char **_split(char *string, char *delimiter)
 	char *token;
 	int position = 0;
 
-	token = _strtok(string, delimiter);
-	while (token != NULL)
+	token = strtok(string, delimiter);
+	while (token != NULL && check_isPrint(token) == 1)
 	{
 		tokens[position] = token;
 		position++;
-		token = _strtok(NULL, delimiter);
+		token = strtok(NULL, delimiter);
 	}
 	tokens[position] = NULL;
 	return (tokens);
+}
+
+int check_isPrint(char *str)
+{
+	int i = 0;
+	int size = strlen(str);
+	for (i = 0; i < size; i++)
+	{
+		if (str[i] != 32)
+		{
+			return (1);
+		}
+	}
+
+	return (0);
 }

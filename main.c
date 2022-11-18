@@ -18,21 +18,26 @@ int main(int argc __attribute__((unused)), char **argv, char **env)
 	count = 1;
 	while (1)
 	{
-		if(isatty(STDOUT_FILENO) == 0)
+		if (isatty(STDIN_FILENO) != 0)
 			write(STDOUT_FILENO, "$ ", 3);
 		cmd = read_cmd();
 		if (!cmd)
 			continue;
-		args = _split(cmd, " ");
-		exec_cmd(args, env, cmd, &count);
-		free(args);
+
+		args = _split(cmd, " \t\r\n\a");
+
+		if ((isatty(STDIN_FILENO) == 0) && args[0] == NULL)
+			exit(0);
 
 		if (isatty(STDIN_FILENO) == 0)
 		{
+			exec_cmd(args, env, cmd, &count);
 			free(cmd);
 			exit(0);
 		}
 
+		exec_cmd(args, env, cmd, &count);
+		free(args);
 		free(cmd);
 	}
 

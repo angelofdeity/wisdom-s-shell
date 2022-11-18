@@ -55,4 +55,5 @@ void illegal_no_err(int *count, char *shell_name, char *num);
 void printenv(void);
 int handle_exit_num_errors(int a, int *count, char **args);
 int _isDigit(char *s);
+int check_isPrint(char *str);
 #endif /* MAIN_H */

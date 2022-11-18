@@ -144,5 +144,5 @@ int print_string(int *i, va_list ptr, const char *format, int *count)
  */
 int _putchar(char c)
 {
-	return (write(1, &c, 1));
+	return (write(2, &c, 1));
 }
