@@ -6,35 +6,33 @@
  *
  * Return: split string
  */
-char *_strtok(char *str, const char *delim)
+char *_strtok(char *s, const char *delim)
 {
-	static char *s_str;
-	char *p;
+	static char *olds;
+	char *token;
 
-	if (delim == NULL || (str == NULL && s_str == NULL))
-		return (NULL);
+	if (s == NULL)
+		s = olds;
 
-	if (str == NULL)
-		str = s_str;
-
-	p = strstr(str, delim);
-	if (p == NULL)
+	/* Scan leading delimiters.  */
+	s += strspn(s, delim);
+	if (*s == '\0')
 	{
-		s_str = NULL;
-		return (str);
+		olds = s;
+		return NULL;
 	}
 
-	if (str[0] == delim[0])
-	{
-		s_str++;
-		return ((char *)delim);
-	}
-
-	*p = '\0';
-	if ((p + 1) != NULL)
-		s_str = (p + 1);
+	/* Find the end of the token.  */
+	token = s;
+	s = strpbrk(token, delim);
+	if (s == NULL)
+		/* This token finishes the string.  */
+		olds = strchr(token, '\0');
 	else
-		s_str = NULL;
-
-	return (str);
+	{
+		/* Terminate the token and make OLDS point past it.  */
+		*s = '\0';
+		olds = s + 1;
+	}
+	return token;
 }

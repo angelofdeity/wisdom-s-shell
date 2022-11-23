@@ -18,11 +18,11 @@ char **_split(char *str, char *delimiter)
 	if (str == NULL)
 		return (NULL);
 	strcpy(newstr, str);
-	tokstr = strtok(newstr, delimiter);
+	tokstr = _strtok(newstr, delimiter);
 	tokens[position] = tokstr;
 	while (tokstr != NULL)
 	{
-		tokstr = strtok(NULL, delimiter);
+		tokstr = _strtok(NULL, delimiter);
 		if (tokstr && !isDelim(tokstr[0], delimiter) && tokstr[0] > 32)
 		{
 			position++;
