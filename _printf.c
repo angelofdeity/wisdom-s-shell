@@ -147,7 +147,10 @@ int _putchar(char c)
 	char *a = _getenv("std_err");
 
 	if (a)
+	{
+		free(a);
 		return (write(2, &c, 1));
+	}
 	else
 		return (write(1, &c, 1));
 }
