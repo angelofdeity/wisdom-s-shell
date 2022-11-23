@@ -121,18 +121,17 @@ char *_getenv(char *search_path)
 	{
 		char *tmp_a;
 		char *a = _strdup(environ[i]);
+
 		tmp_a = a;
 		a = _strtok(a, "=");
-
 		if (_strcmp(a, search_path) == 0)
 		{
 			a = _strtok(NULL, "=");
 			result = strdup(a);
 			free(tmp_a);
-			if(result)
+			if (result)
 				return (result);
-			else
-				break;
+			break;
 		}
 		free(tmp_a);
 		i++;

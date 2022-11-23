@@ -1,0 +1,17 @@
+/* char **_split(char *string, char *delimiter)
+{
+	size_t n = 4096;
+	char **tokens = (char **)malloc(n * sizeof(char *));
+	char *token;
+	int position = 0;
+
+	token = strtok(string, delimiter);
+	while (token != NULL && check_isPrint(token) == 1 && token[0] > 32)
+	{
+		tokens[position] = token;
+		position++;
+		token = strtok(NULL, delimiter);
+	}
+	tokens[position] = NULL;
+	return (tokens);
+} */

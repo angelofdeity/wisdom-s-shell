@@ -1,6 +1,9 @@
 #include "main.h"
 #include "errno.h"
 
+void handle_non_interactive(int shell_interaction,
+							int argc, char *cmd, char **args, char **env, int *count);
+
 /**
  * main - main function
  * @argc: argument count
@@ -10,8 +13,8 @@
  */
 int main(int argc __attribute__((unused)), char **argv, char **env)
 {
-	char *cmd;
-	char **args;
+	char *cmd = NULL;
+	char **args = NULL;
 	char *shell_name = argv[0];
 	int count;
 	int shell_interaction;
@@ -20,31 +23,9 @@ int main(int argc __attribute__((unused)), char **argv, char **env)
 	count = 1;
 
 	shell_interaction = isatty(STDIN_FILENO);
-	if (shell_interaction == 0 && argc == 1) /* if non-interactive */
-	{
-		int exit_code = 0;
-		char *exitchar;
 
-		exitchar = _getenv("err_code");
+	handle_non_interactive(shell_interaction, argc, cmd, args, env, &count);
 
-		if (exitchar != NULL)
-		{
-			exit_code = atoi(exitchar);
-			free(exitchar);
-		}
-		
-		while ((cmd = read_cmd()) != NULL) /* grabs input */
-		{
-			args = _split(cmd, " \t\n\a\r\f\v");
-
-			if (args[0] == NULL)
-				exit(exit_code);
-			exec_cmd(args, env, cmd, &count);
-			free(cmd);
-		}
-
-		exit(exit_code);
-	}
 	while (1)
 	{
 		if (isatty(STDIN_FILENO) != 0)
@@ -60,4 +41,34 @@ int main(int argc __attribute__((unused)), char **argv, char **env)
 	}
 
 	return (0);
+}
+
+void handle_non_interactive(int shell_interaction,
+							int argc, char *cmd, char **args, char **env, int *count)
+{
+	if (shell_interaction == 0 && argc == 1) /* if non-interactive */
+	{
+		int exit_code = 0;
+		char *exitchar;
+
+		exitchar = _getenv("err_code");
+
+		if (exitchar != NULL)
+		{
+			exit_code = atoi(exitchar);
+			free(exitchar);
+		}
+
+		while ((cmd = read_cmd()) != NULL) /* grabs input */
+		{
+			args = _split(cmd, " \t\n\a\r\f\v");
+
+			if (args[0] == NULL)
+				exit(exit_code);
+			exec_cmd(args, env, cmd, count);
+			free(cmd);
+		}
+
+		exit(exit_code);
+	}
 }

@@ -145,6 +145,7 @@ int print_string(int *i, va_list ptr, const char *format, int *count)
 int _putchar(char c)
 {
 	char *a = _getenv("std_err");
+
 	if (a)
 		return (write(2, &c, 1));
 	else

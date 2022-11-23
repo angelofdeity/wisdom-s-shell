@@ -3,11 +3,12 @@
  * _which - searches for command in env
  * @search_var: parameter
  * @env: env
+ * @count: error count
+ *
  * Return: path string
  */
 char *_which(char *search_var, char **env __attribute__((unused)), int *count)
 {
-
 	int i = 0;
 	char *s = NULL, *strA = NULL, *shell_name = _getenv("_");
 	char **paths;
@@ -46,7 +47,6 @@ char *_which(char *search_var, char **env __attribute__((unused)), int *count)
 		i++;
 	}
 	command_not_found_err(count, shell_name, search_var);
-
 	free_malloc_strings(3, paths, strA, shell_name);
 	return (NULL);
 }

@@ -27,15 +27,13 @@ int exec_cmd(char **args, char *env[], char readbuf[], int *count)
 		a = 0;
 
 		location = _which(args[0], environ, count);
-
 		execve(location, args, environ);
-
 		exit(-1);
 	}
 	else if (ch_pid > 0)
 	{
 		wait(&status);
-		if (status == 0) /* checks if execve failed or succeeded */
+		if (status == 0)
 		{
 			errno = 0;
 			_setenv("err_code", "0", 1);
@@ -51,6 +49,5 @@ int exec_cmd(char **args, char *env[], char readbuf[], int *count)
 			_setenv("err_code", "127", 1);
 		}
 	}
-	
 	return (status);
 }
