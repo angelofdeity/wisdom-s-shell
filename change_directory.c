@@ -23,7 +23,7 @@ void change_dir(char **args, char **env __attribute__((unused)), int *count)
 			free_malloc_strings(2, curr_dir, oldpwd);
 			return;
 		}
-		_printf("%s\n", curr_dir);
+		_printf("%s\n", oldpwd);
 		set_directory(curr_dir);
 		free(oldpwd);
 	}
@@ -75,9 +75,10 @@ void cd_home(char *curr_dir)
 
 	if (a != 0)
 	{
-		perror(NULL);
+		_printf("%s\n", curr_dir);
 		free(curr_dir);
-		free(home);
+		if (isatty(STDIN_FILENO) == 0)
+			exit(0);
 		return;
 	}
 	set_directory(curr_dir);

@@ -13,6 +13,8 @@ void call_exit(char **args, char readbuf[], int *count)
 	if (!args[1])
 	{
 		free_arguments_and_buffer(args, readbuf);
+		if (errno == 25)
+			exit(0);
 		exit(errno);
 	}
 	if (args[1])
@@ -25,9 +27,13 @@ void call_exit(char **args, char readbuf[], int *count)
 		else if (args[1][0] == '-')
 		{
 			char *shell_name = _getenv("_");
-
 			illegal_no_err(count, shell_name, args[1]);
 			free(shell_name);
+			if (isatty(STDIN_FILENO) == 0)
+			{
+				free_arguments_and_buffer(args, readbuf);
+				exit(2);
+			}
 			return;
 		}
 		else
@@ -37,10 +43,22 @@ void call_exit(char **args, char readbuf[], int *count)
 			if (a == 0 && _strcmp(args[1], "0") != 0)
 			{
 				handle_exit_num_errors(a, count, args);
+				if (isatty(STDIN_FILENO) == 0)
+				{
+					free_arguments_and_buffer(args, readbuf);
+					exit(2);
+				}
 				return;
 			}
 			if (handle_exit_num_errors(a, count, args) == 1)
+			{
+				if (isatty(STDIN_FILENO) == 0)
+				{
+					free_arguments_and_buffer(args, readbuf);
+					exit(2);
+				}
 				return;
+			}
 			free_arguments_and_buffer(args, readbuf);
 			exit(a % 256);
 		}
@@ -58,6 +76,7 @@ void call_exit(char **args, char readbuf[], int *count)
  */
 int handle_exit_num_errors(int a, int *count, char **args)
 {
+	int shell_interactive = isatty(STDIN_FILENO);
 
 	if (_isDigit(args[1]) == 0)
 	{

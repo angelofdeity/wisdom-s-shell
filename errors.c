@@ -22,9 +22,11 @@ void cant_cd_err(int *count, char *shell_name, char *path)
 void illegal_no_err(int *count, char *shell_name, char *num)
 {
 	_setenv("std_err", "1", 1);
+	errno = 2;
 	_printf("%s: %d: exit: Illegal number: %s\n", shell_name, *count, num);
 	_unsetenv("std_err");
 	*count = *count + 1;
+	_setenv("err_code", "2", 1);
 }
 /**
  * command_not_found_err - command not found
