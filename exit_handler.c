@@ -1,5 +1,6 @@
 #include "main.h"
 #include <ctype.h>
+#include <errno.h>
 
 /**
  * call_exit - exit
@@ -12,14 +13,14 @@ void call_exit(char **args, char readbuf[], int *count)
 	if (!args[1])
 	{
 		free_arguments_and_buffer(args, readbuf);
-		exit(0);
+		exit(errno);
 	}
 	if (args[1])
 	{
 		if (_strlen(args[1]) == 1 && args[1][0] == '0')
 		{
 			free_arguments_and_buffer(args, readbuf);
-			exit(0);
+			exit(errno);
 		}
 		else if (args[1][0] == '-')
 		{

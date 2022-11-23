@@ -5,8 +5,9 @@
  * @env: env
  * Return: path string
  */
-char *_which(char *search_var, char **env __attribute__((unused)))
+char *_which(char *search_var, char **env __attribute__((unused)), int *count)
 {
+
 	int i = 0;
 	char *s = NULL, *strA = NULL, *shell_name = _getenv("_");
 	char **paths;
@@ -18,8 +19,9 @@ char *_which(char *search_var, char **env __attribute__((unused)))
 	s = _getenv("PATH"), strA = malloc(sizeof(search_var) * 10);
 	paths = _split(s, ":");
 	free(s);
-	if (strA == NULL)
+	if (strA == NULL || paths == NULL)
 	{
+		command_not_found_err(count, shell_name, search_var);
 		free_malloc_strings(2, paths, shell_name);
 		return (NULL);
 	}
@@ -43,8 +45,8 @@ char *_which(char *search_var, char **env __attribute__((unused)))
 			free(checkstr);
 		i++;
 	}
-	_printf("%s: ", shell_name);
-	perror(NULL);
+	command_not_found_err(count, shell_name, search_var);
+
 	free_malloc_strings(3, paths, strA, shell_name);
 	return (NULL);
 }

@@ -57,7 +57,7 @@ int call_inbuilt_func(char **args, char **env, char readbuf[], int *count)
 	if (check_unsetenv(args) == 1)
 		return (1);
 
-	s = _which(args[0], environ);
+	s = _which(args[0], environ, count);
 	if (s == NULL)
 		return (1);
 	free(s);

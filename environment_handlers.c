@@ -129,7 +129,10 @@ char *_getenv(char *search_path)
 			a = _strtok(NULL, "=");
 			result = strdup(a);
 			free(tmp_a);
-			return (result);
+			if(result)
+				return (result);
+			else
+				break;
 		}
 		free(tmp_a);
 		i++;

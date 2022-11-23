@@ -15,6 +15,7 @@
 #define ILLEGAL_NO 3
 
 extern char **environ;
+int isDelim(char c, const char *delim);
 void free_malloc_strings(int count, ...);
 char **_split(char *line, char *delimiter);
 char *_strtok(char *str, const char *delim);
@@ -23,7 +24,7 @@ char **split_lines(char *cmd, char *delimiters);
 int check_token_length(char *str, char *delimiter,
 					   int t_index, int token_size);
 int exec_cmd(char **args, char **env, char readbuf[], int *count);
-char *_which(char *path, char **env);
+char *_which(char *path, char **env, int *count);
 char *_getenv(char *search_path);
 int check_file_access(char *filepath);
 int call_inbuilt_func(char **args, char **env, char readbuf[], int *count);
@@ -34,7 +35,6 @@ void call_exit(char **args, char readbuf[], int *count);
 char *_getline();
 int _printf(const char *format, ...);
 int _putchar(char c);
-int isDelim(char c, char *delim);
 int _setenv(char *env_name, char *env_value, int overwrite);
 int _unsetenv(char *env_name);
 void set_directory(char *curr_dir);
@@ -52,6 +52,7 @@ int print_num(long num, int *count);
 int print_string(int *i, va_list ptr, const char *format, int *count);
 void cant_cd_err(int *count, char *shell_name, char *path);
 void illegal_no_err(int *count, char *shell_name, char *num);
+void command_not_found_err(int *count, char *shell_name, char *cmd);
 void printenv(void);
 int handle_exit_num_errors(int a, int *count, char **args);
 int _isDigit(char *s);

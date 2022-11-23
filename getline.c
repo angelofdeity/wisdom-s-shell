@@ -12,7 +12,7 @@ char *read_cmd()
 
 	if (buf == NULL)
 	{
-		exit(0);
+		return (NULL);
 	}
 
 	return (buf);

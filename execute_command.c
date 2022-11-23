@@ -1,4 +1,5 @@
 #include "main.h"
+#include <errno.h>
 
 /**
  * exec_cmd - execute commands
@@ -12,6 +13,7 @@
 int exec_cmd(char **args, char *env[], char readbuf[], int *count)
 {
 	int a = call_inbuilt_func(args, env, readbuf, count);
+	int status;
 	char *location;
 	pid_t ch_pid;
 
@@ -23,26 +25,32 @@ int exec_cmd(char **args, char *env[], char readbuf[], int *count)
 	if (ch_pid == 0)
 	{
 		a = 0;
-		/* env_two = copyenv(environ); */
-		location = _which(args[0], environ);
+
+		location = _which(args[0], environ, count);
 
 		execve(location, args, environ);
 
-		exit(0);
+		exit(-1);
 	}
 	else if (ch_pid > 0)
 	{
-		int status;
-
 		wait(&status);
-
+		if (status == 0) /* checks if execve failed or succeeded */
+		{
+			errno = 0;
+			_setenv("err_code", "0", 1);
+		}
+		if (status == 512)
+		{
+			errno = 2;
+			_setenv("err_code", "2", 1);
+		}
+		if (status == 65280)
+		{
+			errno = 127;
+			_setenv("err_code", "127", 1);
+		}
 	}
-	else
-	{
-		perror("bye\n");
-		exit(1);
-	}
-
-	return (0);
+	
+	return (status);
 }
-
