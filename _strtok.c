@@ -2,7 +2,7 @@
 
 size_t _strspn(const char *s, const char *accept);
 char *_strpbrk(const char *s, const char *accept);
-char *_strchr(const char *str, char c);
+char *_strchr(char *str, char c);
 
 /**
  * _strtok - works like strtok
@@ -96,9 +96,9 @@ char *_strpbrk(const char *s, const char *accept)
  *
  * Return: int
  */
-char *_strchr(const char *str, char c)
+char *_strchr(char *str, char c)
 {
-	const char *p = str;
+	char *p = str;
 	do
 	{
 		if (*p == c)

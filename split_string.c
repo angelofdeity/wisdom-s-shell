@@ -16,7 +16,7 @@ char **_split(char *string, char *delimiter)
 	char *token;
 	int position = 0;
 
-	token = strtok(string, delimiter);
+	token = _strtok(string, delimiter);
 	while (token != NULL)
 	{
 		tokens[position] = token;
@@ -26,7 +26,7 @@ char **_split(char *string, char *delimiter)
 			tokens[position] = token;
 			position++;
 		}
-		token = strtok(NULL, delimiter);
+		token = _strtok(NULL, delimiter);
 	}
 	tokens[position] = NULL;
 	return (tokens);
