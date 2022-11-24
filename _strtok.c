@@ -91,8 +91,8 @@ char *_strpbrk(const char *s, const char *accept)
 
 /**
  * _strchr - works like strchr
- * @s: string
- * @accept: accept
+ * @str: string
+ * @c: accept
  *
  * Return: int
  */
