@@ -6,7 +6,7 @@ char *_strchr(char *str, char c);
 
 /**
  * _strtok - works like strtok
- * @str: string to split
+ * @s: string to split
  * @delim: delimiter to split string by
  *
  * Return: split string
@@ -79,14 +79,14 @@ char *_strpbrk(const char *s, const char *accept)
 	while (*s != '\0')
 	{
 		const char *a = accept;
-		
+
 		while (*a != '\0')
 			if (*a++ == *s)
-				return (char *)s;
+				return ((char *)s);
 		++s;
 	}
 
-	return NULL;
+	return (NULL);
 }
 
 /**
@@ -99,9 +99,8 @@ char *_strpbrk(const char *s, const char *accept)
 char *_strchr(char *str, char c)
 {
 	char *p = str;
-	
-	do
-	{
+
+	do {
 		if (*p == c)
 			return (p);
 	} while (*p++);
