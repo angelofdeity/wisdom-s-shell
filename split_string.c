@@ -8,6 +8,30 @@
  *
  * Return: string array
  */
+
+char **_split(char *string, char *delimiter)
+{
+	size_t n = 4096;
+	char **tokens = (char **)malloc(n * sizeof(char *));
+	char *token;
+	int position = 0;
+
+	token = strtok(string, delimiter);
+	while (token != NULL)
+	{
+		tokens[position] = token;
+
+		if (token && !isDelim(token[0], delimiter) && token[0] > 32)
+		{
+			tokens[position] = token;
+			position++;
+		}
+		token = strtok(NULL, delimiter);
+	}
+	tokens[position] = NULL;
+	return (tokens);
+}
+/*
 char **_split(char *str, char *delimiter)
 {
 	char **tokens = malloc(14096);
@@ -33,7 +57,7 @@ char **_split(char *str, char *delimiter)
 	tokens[position] = NULL;
 	return (tokens);
 }
-
+*/
 /**
  * isDelim - checks if a char is delim
  * @c: char to check

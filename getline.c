@@ -26,7 +26,7 @@ char *_getline(void)
 {
 	int RL_BUFF_SIZE = 14096, buffsize = RL_BUFF_SIZE, position = 0, r;
 	char *buffer = malloc(sizeof(char) * buffsize);
-	char c;
+	char c = 'c';
 
 	if (!buffer)
 		return (NULL);
