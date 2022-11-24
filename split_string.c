@@ -3,7 +3,7 @@
 
 /**
  * _split - split a string into an array
- * @str: string to split
+ * @string: string to split
  * @delimiter: delimiter to split by
  *
  * Return: string array
@@ -31,33 +31,7 @@ char **_split(char *string, char *delimiter)
 	tokens[position] = NULL;
 	return (tokens);
 }
-/*
-char **_split(char *str, char *delimiter)
-{
-	char **tokens = malloc(14096);
-	char newstr[14096];
-	char *tokstr;
-	int position = 0;
 
-	if (str == NULL)
-		return (NULL);
-	strcpy(newstr, str);
-	tokstr = _strtok(newstr, delimiter);
-	tokens[position] = tokstr;
-	while (tokstr != NULL)
-	{
-		tokstr = _strtok(NULL, delimiter);
-		if (tokstr && !isDelim(tokstr[0], delimiter) && tokstr[0] > 32)
-		{
-			position++;
-			tokens[position] = tokstr;
-		}
-	}
-	position++;
-	tokens[position] = NULL;
-	return (tokens);
-}
-*/
 /**
  * isDelim - checks if a char is delim
  * @c: char to check

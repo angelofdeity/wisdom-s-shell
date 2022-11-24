@@ -24,7 +24,7 @@ char *_strtok(char *s, const char *delim)
 	if (*s == '\0')
 	{
 		olds = s;
-		return NULL;
+		return (NULL);
 	}
 
 	/* Find the end of the token.  */
@@ -39,7 +39,7 @@ char *_strtok(char *s, const char *delim)
 		*s = '\0';
 		olds = s + 1;
 	}
-	return token;
+	return (token);
 }
 
 /**
@@ -61,12 +61,11 @@ size_t _strspn(const char *s, const char *accept)
 			if (*p == *a)
 				break;
 		if (*a == '\0')
-			return count;
-		else
-			++count;
+			return (count);
+		++count;
 	}
 
-	return count;
+	return (count);
 }
 /**
  * _strpbrk - works like strpbrk
@@ -80,6 +79,7 @@ char *_strpbrk(const char *s, const char *accept)
 	while (*s != '\0')
 	{
 		const char *a = accept;
+		
 		while (*a != '\0')
 			if (*a++ == *s)
 				return (char *)s;
@@ -99,6 +99,7 @@ char *_strpbrk(const char *s, const char *accept)
 char *_strchr(char *str, char c)
 {
 	char *p = str;
+	
 	do
 	{
 		if (*p == c)
